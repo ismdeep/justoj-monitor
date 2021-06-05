@@ -1,2 +1,1 @@
-# justoj-monitor
-JustOJ Monitor
+# JustOJ Monitor
