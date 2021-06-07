@@ -21,6 +21,7 @@ type reponseData struct {
 	} `json:"data"`
 }
 
+var recovered = true
 var duration time.Duration
 var errDuration time.Duration
 
@@ -45,8 +46,15 @@ func check() error {
 
 	log.Info("check()", "url", url, "data", data)
 
-	if data.Data.PendingCnt >= config.PendingMonitor.PendingThreshold {
-		log.Warn("check", "do", "notification.Send", "to", config.Notification.To)
+	if data.Data.PendingCnt < config.PendingMonitor.PendingThreshold {
+		// 一切正常
+		recovered = true
+		return nil
+	}
+
+	// 服务异常，需要发送通知邮件。
+	log.Warn("check", "do", "notification.Send", "to", config.Notification.To)
+	if recovered {
 		_ = notification.Send(&notification.Pack{
 			SenderName: "JustOJ Monitor",
 			Subject:    "JustOJ Notification",
@@ -54,6 +62,7 @@ func check() error {
 			Content:    fmt.Sprintf("JustOJ服务器判题服务器出现大量未判题提交。判题服务器堵塞。请尽快处理！ PendingCnt: %v", data.Data.PendingCnt),
 			To:         config.Notification.To,
 		})
+		recovered = false
 	}
 
 	return nil
