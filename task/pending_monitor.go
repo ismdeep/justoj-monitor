@@ -60,7 +60,7 @@ func check() error {
 			Subject:    "JustOJ Notification",
 			Type:       "text/plain",
 			Content:    fmt.Sprintf("JustOJ服务器判题服务器出现大量未判题提交。判题服务器堵塞。请尽快处理！ PendingCnt: %v", data.Data.PendingCnt),
-			To:         config.Notification.To,
+			ToMailList: config.Notification.To,
 		})
 		recovered = false
 	}

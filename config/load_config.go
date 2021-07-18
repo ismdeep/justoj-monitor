@@ -12,9 +12,9 @@ type configStruct struct {
 		Site string `json:"site"`
 	} `json:"justoj"`
 	Notification struct {
-		Host  string `json:"host"`
-		Token string `json:"token"`
-		To    string `json:"to"`
+		Host  string   `json:"host"`
+		Token string   `json:"token"`
+		To    []string `json:"to"`
 	} `json:"notification"`
 	PendingMonitor struct {
 		Duration         string `json:"duration"`
@@ -29,7 +29,11 @@ var Notification = &Global.Notification
 var PendingMonitor = &Global.PendingMonitor
 
 func LoadConfig() {
-	filePath := args.GetValue("-c")
+	filePath := "./server.toml"
+	if args.Exists("-c") {
+		filePath = args.GetValue("-c")
+	}
+
 	content, err := ioutil.ReadFile(filePath)
 	if err != nil {
 		panic(err)

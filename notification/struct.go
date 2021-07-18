@@ -10,11 +10,11 @@ import (
 )
 
 type Pack struct {
-	SenderName string `json:"sender_name"`
-	Subject    string `json:"subject"`
-	Type       string `json:"type"`
-	Content    string `json:"content"`
-	To         string `json:"to_mail"`
+	SenderName string   `json:"sender_name"`
+	Subject    string   `json:"subject"`
+	Type       string   `json:"type"`
+	Content    string   `json:"content"`
+	ToMailList []string `json:"to_mail"`
 }
 
 // Send 发送
@@ -24,13 +24,13 @@ func Send(pack *Pack) error {
 		return err
 	}
 
-	req, err := http.NewRequest("POST", fmt.Sprintf("%v/mails", config.Notification.Host), strings.NewReader(string(jsonData)))
+	req, err := http.NewRequest("POST", fmt.Sprintf("%v/api/v1/mails", config.Notification.Host), strings.NewReader(string(jsonData)))
 	if err != nil {
 		return err
 	}
 
 	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("Authorization", fmt.Sprintf("Bearer %v", config.Notification.Token))
+	req.Header.Set("Token", config.Notification.Token)
 
 	got, err := (&http.Client{}).Do(req)
 	if err != nil {
