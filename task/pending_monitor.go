@@ -11,7 +11,7 @@ import (
 	"time"
 )
 
-type reponseData struct {
+type responseData struct {
 	Code uint `json:"code"`
 	Data struct {
 		PendingCnt   uint `json:"pending_cnt"`
@@ -39,7 +39,7 @@ func check() error {
 		return err
 	}
 
-	data := &reponseData{}
+	data := &responseData{}
 	if err := json.Unmarshal(dataByte, data); err != nil {
 		return err
 	}
