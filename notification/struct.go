@@ -14,7 +14,7 @@ type Pack struct {
 	Subject    string   `json:"subject"`
 	Type       string   `json:"type"`
 	Content    string   `json:"content"`
-	ToMailList []string `json:"to_mail"`
+	ToMailList []string `json:"to_mail_list"`
 }
 
 // Send 发送

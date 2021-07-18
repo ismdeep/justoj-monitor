@@ -26,7 +26,7 @@ func TestSend(t *testing.T) {
 					Subject:    "Test Subject",
 					Type:       "text/plain",
 					Content:    "Hello",
-					To:         "l.jiang.1024@gmail.com",
+					ToMailList: []string{"l.jiang.1024@gmail.com"},
 				},
 			},
 			wantErr: false,
